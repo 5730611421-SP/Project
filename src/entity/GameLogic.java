@@ -27,7 +27,7 @@ public class GameLogic {
 	private static int ITEM_SPAWN_DELAY = 10*SPAWN_DELAY;
 	private int itemSpawnDelayCounter = 0;
 
-	private boolean readyToRender = false;
+//	private boolean readyToRender = false;
 
 	protected boolean speedUp = false;
 	protected boolean speedDown = false;
@@ -66,7 +66,7 @@ public class GameLogic {
 			if (item instanceof Bomb) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
-					// Resource.bombSound.play();
+					Resource.bombSound.play();
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
 					if (!player.isBarrier()) {
@@ -216,11 +216,12 @@ public class GameLogic {
 
 	public synchronized void onStart() {
 		playerStatus = new PlayerStatus();
-		readyToRender = true;
+//		readyToRender = true;
 	}
 
 	public synchronized void onExit() {
-		readyToRender = false;
+		
+//		readyToRender = false;
 	}
 
 }

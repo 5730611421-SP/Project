@@ -14,8 +14,6 @@ import entity.GameLogic;
 import input.InputUtility;
 
 
-
-
 public class GameManager {
 	
 	private static GameTitle titleScene;
@@ -25,20 +23,7 @@ public class GameManager {
 	private static JPanel nextScene = null;
 	
 	public static void runGame(GameLogic gameLogic){
-		titleScene = new GameTitle();
-		
-//		if(gameLogic instanceof IRenderableHolder){
-//			gameScreen = new GameScreen((IRenderableHolder)gameLogic);
-//		}else{
-//			gameScreen = new GameScreen(new IRenderableHolder() {
-//				private List<IRenderableObject> emptyList = new ArrayList<IRenderableObject>(0);
-//				@Override
-//				public List<IRenderableObject> getSortedRenderableObject() {
-//					return emptyList;
-//				}
-//			});
-//		}
-		
+		titleScene = new GameTitle();	
 		gameWindow = new GameWindow(titleScene);
 		
 		while(true){
@@ -50,7 +35,6 @@ public class GameManager {
 			gameWindow.getCurrentScene().repaint();
 			if(gameWindow.getCurrentScene() instanceof GameScreen){
 				gameLogic.logicUpdate();
-//				InputUtility.postUpdate();
 			}
 			if(nextScene != null){
 				if(gameWindow.getCurrentScene() instanceof GameScreen)
@@ -58,7 +42,6 @@ public class GameManager {
 				gameWindow.switchScene(nextScene);
 				if(nextScene instanceof GameScreen)
 					gameLogic.onStart();
-				
 			}
 		}
 	}
