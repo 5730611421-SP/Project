@@ -13,18 +13,18 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static final Font standardFont = new Font("Tahoma", Font.BOLD, 30);
-	public static BufferedImage appleSprite;
+	public static BufferedImage bombSprite;
 	public static AudioClip coinSound;
 	public static AudioClip bombSound;
 
 	static {
 		try {
 			ClassLoader loader = Resource.class.getClassLoader();
-			appleSprite = ImageIO.read(loader.getResource("Apple.png"));
+			bombSprite = ImageIO.read(loader.getResource("bomb.png"));
 			coinSound = Applet.newAudioClip((loader.getResource("coin.wav")).toURI().toURL());
 			bombSound = Applet.newAudioClip((loader.getResource("bomb.wav")).toURI().toURL());
 		} catch (Exception e) {
-			appleSprite = null;
+			bombSprite = null;
 			coinSound = null;
 			bombSound = null;
 		}

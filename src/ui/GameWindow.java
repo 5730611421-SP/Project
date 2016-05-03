@@ -19,7 +19,7 @@ public class GameWindow extends JFrame {
 	
 	
 	public GameWindow(JPanel scene) throws HeadlessException {
-		super();
+		super("BOMB EVADER!");
 		// TODO Auto-generated constructor stub
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);

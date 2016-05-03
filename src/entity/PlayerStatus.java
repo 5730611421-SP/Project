@@ -35,6 +35,10 @@ public class PlayerStatus implements IRenderable {
 		PlayerStatus.score -= score;
 		if(PlayerStatus.score<0) PlayerStatus.score = 0;
 	}
+	
+	public static void resetScore() {
+		score = 0;
+	}
 
 	@Override
 	public void draw(Graphics2D g2d) {

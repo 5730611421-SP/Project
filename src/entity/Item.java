@@ -71,7 +71,7 @@ public abstract class Item implements IRenderable {
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 2;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ public class GameOverScreen extends JPanel {
 		super();
 		// TODO Auto-generated constructor stub
 		setPreferredSize(new Dimension(ConfigurableOption.SCREEN_WIDTH, ConfigurableOption.SCREEN_HEIGHT));
+		this.setLayout(new BorderLayout());
 
 //		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 //		
@@ -37,9 +40,15 @@ public class GameOverScreen extends JPanel {
 //		JLabel cont = new JLabel("Continue?");
 //		
 		JPanel yn = new JPanel();
-		yn.setBackground(Color.RED);
+		
+		yn.setBackground(Color.ORANGE);
 		JButton y = new JButton("Yes");
 		JButton n = new JButton("No");
+		
+//		y.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+//		n.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+
+
 		
 		y.addActionListener(new ActionListener() {
 			
@@ -63,10 +72,7 @@ public class GameOverScreen extends JPanel {
 		yn.add(y);
 		yn.add(n);
 		
-//		this.add(over);
-//		this.add(score);
-//		this.add(cont);
-		this.add(yn);
+		this.add(yn,BorderLayout.SOUTH);
 	}
 	
 	@Override

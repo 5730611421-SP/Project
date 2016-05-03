@@ -15,8 +15,6 @@ import ui.GameManager;
 
 public class GameLogic {
 
-	private static GameLogic instance = new GameLogic();
-
 	protected Player player = new Player();
 	protected PlayerStatus playerStatus = new PlayerStatus();
 	protected ArrayList<Item> items = new ArrayList<Item>();
@@ -24,10 +22,8 @@ public class GameLogic {
 	private static final int SPAWN_DELAY = 50;
 	private int spawnDelayCounter = 0;
 
-	private static int ITEM_SPAWN_DELAY = 10*SPAWN_DELAY;
+	private static int ITEM_SPAWN_DELAY = 3*SPAWN_DELAY;
 	private int itemSpawnDelayCounter = 0;
-
-//	private boolean readyToRender = false;
 
 	protected boolean speedUp = false;
 	protected boolean speedDown = false;
@@ -35,15 +31,12 @@ public class GameLogic {
 	public GameLogic() {
 		super();
 		// TODO Auto-generated constructor stub
+		RenderableHolder.getInstance().removeAll();
 		RenderableHolder.getInstance().add(player);
 		RenderableHolder.getInstance().add(playerStatus);
 		for (Item item : items) {
 			RenderableHolder.getInstance().add(item);
 		}
-	}
-
-	public static GameLogic getInstance() {
-		return instance;
 	}
 
 	public void logicUpdate() {
@@ -65,8 +58,8 @@ public class GameLogic {
 			Item item = items.get(i);
 			if (item instanceof Bomb) {
 				if (item.collideWith(player)) {
-					item.destroyed = true;
 					Resource.bombSound.play();
+					item.destroyed = true;
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
 					if (!player.isBarrier()) {
@@ -89,6 +82,7 @@ public class GameLogic {
 					items.remove(item);
 					if (!player.isBarrier()) {
 						player.setBarrier(true);
+						itemSpawnDelayCounter = 0;
 					}
 				} else if (!item.isDestroyed()) {
 					item.update();
@@ -187,8 +181,9 @@ public class GameLogic {
 		}
 		if (itemSpawnDelayCounter == ITEM_SPAWN_DELAY) {
 			itemSpawnDelayCounter = 0;
-			ITEM_SPAWN_DELAY = RandomUtility.random(8, 20)*SPAWN_DELAY;
+			ITEM_SPAWN_DELAY = RandomUtility.random(5, 10)*SPAWN_DELAY;
 			int i = RandomUtility.random(0, 4);
+//			int i =0;
 			if (i == 0) {
 				Barrier b1 = new Barrier(RandomUtility.random(0, 600));
 				items.add(b1);
@@ -216,12 +211,10 @@ public class GameLogic {
 
 	public synchronized void onStart() {
 		playerStatus = new PlayerStatus();
-//		readyToRender = true;
 	}
 
 	public synchronized void onExit() {
 		
-//		readyToRender = false;
 	}
 
 }

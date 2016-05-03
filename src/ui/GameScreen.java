@@ -49,6 +49,7 @@ public class GameScreen extends JPanel {
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
 				InputUtility.setMouseX(e.getX());
+				
 			}
 			
 			@Override

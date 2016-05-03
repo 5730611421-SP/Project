@@ -5,13 +5,10 @@
  */
 package ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JPanel;
 
 import entity.GameLogic;
-import input.InputUtility;
+import entity.PlayerStatus;
 
 
 public class GameManager {
@@ -21,11 +18,12 @@ public class GameManager {
 	private static GameWindow gameWindow;
 	private static GameOverScreen gameOver;
 	private static JPanel nextScene = null;
+	private static GameLogic gameLogic;
 	
-	public static void runGame(GameLogic gameLogic){
+	public static void runGame(GameLogic game){
 		titleScene = new GameTitle();	
 		gameWindow = new GameWindow(titleScene);
-		
+		gameLogic = game;
 		while(true){
 			try {
 				Thread.sleep(20);
@@ -51,7 +49,9 @@ public class GameManager {
 	}
 	
 	public static void newGame(){
+		PlayerStatus.resetScore();
 		gameScreen = new GameScreen();
+		gameLogic = new GameLogic();
 		nextScene = gameScreen;
 	}
 	

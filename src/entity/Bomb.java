@@ -20,8 +20,14 @@ public class Bomb extends Item{
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		g2d.setColor(Color.BLACK);
-		g2d.fillOval(x, y, radius, radius);
-//		g2d.drawImage(Resource.appleSprite, null, x, y);
+//		g2d.setColor(Color.BLACK);
+//		g2d.fillOval(x, y, radius, radius);
+		g2d.drawImage(Resource.bombSprite, null, x, y);
+	}
+	
+	@Override
+	public int getZ() {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 }

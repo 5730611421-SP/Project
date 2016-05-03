@@ -54,6 +54,8 @@ public class Player implements IRenderable {
 		// TODO Auto-generated method stub
 		g2d.setColor(Color.BLUE);
 		g2d.fillRect(x, y, radius, radius);
+		if(isBarrier())
+			g2d.drawRect(x+radius/2-explodedRadius/2, y+radius/2-explodedRadius/2, explodedRadius, explodedRadius);
 	}
 
 	@Override

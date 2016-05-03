@@ -31,6 +31,10 @@ public class RenderableHolder {
 			}
 		});
 	}
+	
+	public void removeAll() {
+		entities.clear();
+	}
 
 	public List<IRenderable> getRenderableList() {
 		return entities;
