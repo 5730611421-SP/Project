@@ -14,8 +14,6 @@ import entity.GameLogic;
 public class GameWindow extends JFrame {
 
 	private JPanel currentScene;
-//	private GameLogic logic = GameLogic.getInstance();
-//	private boolean switching;
 	
 	
 	public GameWindow(JPanel scene) throws HeadlessException {
@@ -28,19 +26,6 @@ public class GameWindow extends JFrame {
 		pack();
 		setVisible(true);
 		currentScene.requestFocus();
-		
-//		if(currentScene==ConfigurableOption.gameScreen){
-////			System.out.println("ouch!");
-//			while(true){
-//				try {
-//					Thread.sleep(20);
-//				} catch (InterruptedException e) {
-//				}
-//				currentScene.repaint();
-//				logic.logicUpdate();
-//				
-//			}
-//		}
 	}
 
 	public void switchScene(JPanel scene){

@@ -3,6 +3,7 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.image.ImageProducer;
 
 import input.InputUtility;
 import render.IRenderable;
@@ -11,19 +12,10 @@ public class Player implements IRenderable {
 
 	protected int radius = 40;
 	protected int x;
-	protected int y = 420 - radius;
+	protected int y = ConfigurableOption.SCREEN_HEIGHT-60 - radius;
 	protected boolean barrier = false;
 	protected boolean reduce = false;
 	protected int shoot=0;
-	
-	public boolean isReduce() {
-		return reduce;
-	}
-
-	public void setReduce(boolean reduce) {
-		this.reduce = reduce;
-	}
-
 	protected int explodedRadius = radius;
 
 	public Player() {
@@ -38,13 +30,16 @@ public class Player implements IRenderable {
 				x = 0;
 		} else if (InputUtility.getKeyPressed(KeyEvent.VK_RIGHT)) {
 			x += 5;
-			if (x >= 640 - radius)
-				x = 640 - radius;
+			if (x >= ConfigurableOption.SCREEN_WIDTH - radius)
+				x = ConfigurableOption.SCREEN_WIDTH - radius;
 		} else if (InputUtility.getMouseX() >= 0 && InputUtility.getMouseX() <= ConfigurableOption.SCREEN_WIDTH-radius) {
 			x = InputUtility.getMouseX();
+			if (InputUtility.getMouseY()>=0&&InputUtility.getMouseY()<=ConfigurableOption.SCREEN_HEIGHT-100 && InputUtility.getKeyPressed(KeyEvent.VK_CONTROL))
+				y= InputUtility.getMouseY();
 		}
+		
 		if (barrier){
-			explodedRadius = radius+radius/2;
+			explodedRadius = radius+radius;
 		} else 
 			explodedRadius = radius;
 	}
@@ -56,6 +51,12 @@ public class Player implements IRenderable {
 		g2d.fillRect(x, y, radius, radius);
 		if(isBarrier())
 			g2d.drawRect(x+radius/2-explodedRadius/2, y+radius/2-explodedRadius/2, explodedRadius, explodedRadius);
+	}
+
+	public boolean isShootable() {
+		if (shoot>0)
+			return true;
+		return false;
 	}
 
 	@Override
@@ -84,5 +85,16 @@ public class Player implements IRenderable {
 		this.barrier = barrier;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public boolean isReduce() {
+		return reduce;
+	}
+
+	public void setReduce(boolean reduce) {
+		this.reduce = reduce;
+	}
 	
 }

@@ -35,8 +35,6 @@ public class GameManager {
 				gameLogic.logicUpdate();
 			}
 			if(nextScene != null){
-				if(gameWindow.getCurrentScene() instanceof GameScreen)
-					gameLogic.onExit();
 				gameWindow.switchScene(nextScene);
 				if(nextScene instanceof GameScreen)
 					gameLogic.onStart();

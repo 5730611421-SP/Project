@@ -44,10 +44,10 @@ public class PlayerStatus implements IRenderable {
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		g2d.setBackground(Color.BLACK);
-		g2d.clearRect(0, 420, 640, 60);
+		g2d.clearRect(0, ConfigurableOption.SCREEN_HEIGHT-60, ConfigurableOption.SCREEN_WIDTH, 60);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(Resource.standardFont);
-		g2d.drawString("SCORE: "+score, 10, 460);
+		g2d.drawString("SCORE: "+score, 10, ConfigurableOption.SCREEN_HEIGHT-20);
 	}
 
 	@Override

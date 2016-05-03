@@ -29,26 +29,11 @@ public class GameOverScreen extends JPanel {
 		setPreferredSize(new Dimension(ConfigurableOption.SCREEN_WIDTH, ConfigurableOption.SCREEN_HEIGHT));
 		this.setLayout(new BorderLayout());
 
-//		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-//		
-//		setFont(new Font("Tahoma",Font.BOLD+Font.ITALIC,80));
-//		JLabel over = new JLabel("GAME OVER");
-//		
-//		setFont(new Font("Tahoma",Font.BOLD+Font.ITALIC,80));
-//		JLabel score = new JLabel("SCORE = "+ PlayerStatus.getScore()); 
-//		
-//		JLabel cont = new JLabel("Continue?");
-//		
 		JPanel yn = new JPanel();
 		
 		yn.setBackground(Color.ORANGE);
 		JButton y = new JButton("Yes");
 		JButton n = new JButton("No");
-		
-//		y.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-//		n.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-
-
 		
 		y.addActionListener(new ActionListener() {
 			
@@ -87,15 +72,15 @@ public class GameOverScreen extends JPanel {
 		g2.setColor(Color.BLACK);
 		
 		Rectangle2D rect = g2.getFontMetrics().getStringBounds("GAME OVER", g2);
-		g2.drawString("GAME OVER", 320-(int)rect.getWidth()/2, 180+(int)rect.getHeight()/2-g2.getFontMetrics().getDescent());
+		g2.drawString("GAME OVER", ConfigurableOption.SCREEN_WIDTH/2-(int)rect.getWidth()/2, ConfigurableOption.SCREEN_HEIGHT/2-50+(int)rect.getHeight()/2-g2.getFontMetrics().getDescent());
 		
 		g2.setFont(new Font("Tahoma",Font.BOLD,30));
 		
 		Rectangle2D rect2 = g2.getFontMetrics().getStringBounds("SCORE = "+ PlayerStatus.getScore(), g2);
-		g2.drawString("SCORE = "+ PlayerStatus.getScore(), 320-(int)rect2.getWidth()/2, 240+(int)rect.getHeight()/2-g2.getFontMetrics().getDescent());
+		g2.drawString("SCORE = "+ PlayerStatus.getScore(), ConfigurableOption.SCREEN_WIDTH/2-(int)rect2.getWidth()/2, ConfigurableOption.SCREEN_HEIGHT/2+(int)rect.getHeight()/2-g2.getFontMetrics().getDescent());
 		
 		Rectangle2D rect3 = g2.getFontMetrics().getStringBounds("Continue?", g2);
-		g2.drawString("Continue?", 320-(int)rect3.getWidth()/2, 240+(int)rect.getHeight()+(int)rect3.getHeight()/2-g2.getFontMetrics().getDescent());
+		g2.drawString("Continue?", ConfigurableOption.SCREEN_WIDTH/2-(int)rect3.getWidth()/2, ConfigurableOption.SCREEN_HEIGHT/2+(int)rect.getHeight()+(int)rect3.getHeight()/2-g2.getFontMetrics().getDescent());
 		
 	}
 

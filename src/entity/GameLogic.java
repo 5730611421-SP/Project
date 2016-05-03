@@ -22,7 +22,7 @@ public class GameLogic {
 	private static final int SPAWN_DELAY = 50;
 	private int spawnDelayCounter = 0;
 
-	private static int ITEM_SPAWN_DELAY = 3*SPAWN_DELAY;
+	private static int ITEM_SPAWN_DELAY = 3 * SPAWN_DELAY;
 	private int itemSpawnDelayCounter = 0;
 
 	protected boolean speedUp = false;
@@ -38,24 +38,41 @@ public class GameLogic {
 			RenderableHolder.getInstance().add(item);
 		}
 	}
+	
+	int checkPauseStatus = 0;
+	boolean isPause = false;
 
 	public void logicUpdate() {
+		
 		if (InputUtility.getKeyPressed(KeyEvent.VK_ENTER)) {
-			if (playerStatus.isPause())
-				playerStatus.setPause(false);
-			else
-				playerStatus.setPause(true);
+//			if (playerStatus.isPause())
+//				playerStatus.setPause(false);
+//			else
+//				playerStatus.setPause(true);
+		
+			if(checkPauseStatus == 0) {
+				isPause = !isPause;
+				checkPauseStatus = 1;
+			}
+			
+		} else {
+			checkPauseStatus = 0;
 		}
-
-		if (playerStatus.isPause()) {
+		
+		if (isPause) {
 			return;
 		}
 
 		player.update();
-		int ran = RandomUtility.random(5, 11);
-
+		int ran;
+		if (player.isReduce())
+			ran = RandomUtility.random(2, 6);
+		else
+			ran = RandomUtility.random(5, 11);
+		
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
+			
 			if (item instanceof Bomb) {
 				if (item.collideWith(player)) {
 					Resource.bombSound.play();
@@ -74,6 +91,7 @@ public class GameLogic {
 					items.remove(item);
 				}
 			}
+
 			if (item instanceof Barrier) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
@@ -91,15 +109,14 @@ public class GameLogic {
 					items.remove(item);
 				}
 			}
+
 			if (item instanceof BombDevastator) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
 					Resource.coinSound.play();
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
-					if (!player.isBarrier()) {
-						player.setBarrier(true);
-					}
+					player.shoot++;
 				} else if (!item.isDestroyed()) {
 					item.update();
 				} else if (item.isDestroyed()) {
@@ -107,6 +124,7 @@ public class GameLogic {
 					items.remove(item);
 				}
 			}
+
 			if (item instanceof BombReducer) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
@@ -114,9 +132,10 @@ public class GameLogic {
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
 					if (!player.isReduce()) {
-						RandomUtility.random(5, 11);
 						player.setReduce(true);
+						itemSpawnDelayCounter = 0;
 					}
+
 				} else if (!item.isDestroyed()) {
 					item.update();
 				} else if (item.isDestroyed()) {
@@ -124,6 +143,7 @@ public class GameLogic {
 					items.remove(item);
 				}
 			}
+
 			if (item instanceof SpeedUpItem) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
@@ -131,6 +151,7 @@ public class GameLogic {
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
 					speedUp = true;
+					itemSpawnDelayCounter = 0;
 				} else if (!item.isDestroyed()) {
 					item.update();
 				} else if (item.isDestroyed()) {
@@ -138,6 +159,7 @@ public class GameLogic {
 					items.remove(item);
 				}
 			}
+
 			if (item instanceof SpeedDownItem) {
 				if (item.collideWith(player)) {
 					item.destroyed = true;
@@ -145,6 +167,7 @@ public class GameLogic {
 					RenderableHolder.getInstance().getRenderableList().remove(item);
 					items.remove(item);
 					speedDown = true;
+					itemSpawnDelayCounter = 0;
 				} else if (!item.isDestroyed()) {
 					item.update();
 				} else if (item.isDestroyed()) {
@@ -154,17 +177,28 @@ public class GameLogic {
 			}
 
 		}
+		
+		if (player.isShootable() && InputUtility.getKeyPressed(KeyEvent.VK_SPACE)) {
+			items.clear();
+			RenderableHolder.getInstance().removeAll();
+			RenderableHolder.getInstance().add(player);
+			RenderableHolder.getInstance().add(playerStatus);
+			for (Item item : items) {
+				RenderableHolder.getInstance().add(item);
+			}
+		}
+		
 
 		spawnDelayCounter++;
 		itemSpawnDelayCounter++;
 		if (spawnDelayCounter == SPAWN_DELAY) {
 			spawnDelayCounter = 0;
 			for (int i = 0; i < ran; i++) {
-				Bomb a1 = new Bomb(RandomUtility.random(0, 600));
+				Bomb a1 = new Bomb((RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				if (speedUp)
-					a1.setSpeedUp(3);
+					a1.setSpeedUp(5);
 				else if (speedDown)
-					a1.setSpeedDown(3);
+					a1.setSpeedDown(5);
 				else {
 					a1.setSpeedDown(0);
 					a1.setSpeedUp(0);
@@ -173,7 +207,7 @@ public class GameLogic {
 				RenderableHolder.getInstance().add(a1);
 			}
 		}
-		if (itemSpawnDelayCounter == 5*SPAWN_DELAY) {
+		if (itemSpawnDelayCounter == 5 * SPAWN_DELAY) {
 			player.setBarrier(false);
 			player.setReduce(false);
 			speedUp = false;
@@ -181,27 +215,30 @@ public class GameLogic {
 		}
 		if (itemSpawnDelayCounter == ITEM_SPAWN_DELAY) {
 			itemSpawnDelayCounter = 0;
-			ITEM_SPAWN_DELAY = RandomUtility.random(5, 10)*SPAWN_DELAY;
+			ITEM_SPAWN_DELAY = RandomUtility.random(5, 10) * SPAWN_DELAY;
 			int i = RandomUtility.random(0, 4);
-//			int i =0;
 			if (i == 0) {
-				Barrier b1 = new Barrier(RandomUtility.random(0, 600));
+				Barrier b1 = new Barrier((RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				items.add(b1);
 				RenderableHolder.getInstance().add(b1);
 			} else if (i == 1) {
-				BombDevastator b2 = new BombDevastator(RandomUtility.random(0, 600));
+				BombDevastator b2 = new BombDevastator(
+						(RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				items.add(b2);
 				RenderableHolder.getInstance().add(b2);
 			} else if (i == 2) {
-				BombReducer b3 = new BombReducer(RandomUtility.random(0, 600));
+				BombReducer b3 = new BombReducer(
+						(RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				items.add(b3);
 				RenderableHolder.getInstance().add(b3);
 			} else if (i == 3) {
-				SpeedDownItem b4 = new SpeedDownItem(RandomUtility.random(0, 600));
+				SpeedDownItem b4 = new SpeedDownItem(
+						(RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				items.add(b4);
 				RenderableHolder.getInstance().add(b4);
-			} else {
-				SpeedUpItem b5 = new SpeedUpItem(RandomUtility.random(0, 600));
+			} else if (i == 4) {
+				SpeedUpItem b5 = new SpeedUpItem(
+						(RandomUtility.random(0, (ConfigurableOption.SCREEN_WIDTH - 80)/2))*2);
 				items.add(b5);
 				RenderableHolder.getInstance().add(b5);
 			}
@@ -214,7 +251,7 @@ public class GameLogic {
 	}
 
 	public synchronized void onExit() {
-		
+
 	}
 
 }
