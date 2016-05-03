@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class GameLogic {
 
 	private static final int SPAWN_DELAY = 50;
 	private int spawnDelayCounter = 0;
+	
+	private boolean readyToRender = false;
 
 	public GameLogic() {
 		super();
@@ -37,6 +40,17 @@ public class GameLogic {
 	}
 
 	public void logicUpdate() {
+		if (InputUtility.getKeyPressed(KeyEvent.VK_ENTER)) {
+			if (playerStatus.isPause())
+				playerStatus.setPause(false);
+			else
+				playerStatus.setPause(true);
+		}
+
+		if (playerStatus.isPause()) {
+			return;
+		}
+		
 		player.update();
 
 		for (int i = 0; i < items.size();i++) {
@@ -74,6 +88,15 @@ public class GameLogic {
 			}
 		}
 
+	}
+	
+	public synchronized void onStart() {
+		playerStatus = new PlayerStatus();
+		readyToRender = true;
+	}
+	
+	public synchronized void onExit() {
+		readyToRender = false;
 	}
 
 }

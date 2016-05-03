@@ -8,9 +8,18 @@ import render.Resource;
 public class PlayerStatus implements IRenderable {
 	
 	private static int score = 0;
+	private boolean pause = false;
 
 	public static int getScore() {
 		return score;
+	}
+	
+	public boolean isPause() {
+		return pause;
+	}
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
 	}
 
 	public PlayerStatus() {

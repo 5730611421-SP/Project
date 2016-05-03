@@ -13,40 +13,21 @@ import entity.GameLogic;
 
 public class GameWindow extends JFrame {
 
-//	private static GameScreen gameScreen = new GameScreen();
-//	private static GameTitle gameTitle = new GameTitle();
-//	private static GameOverScreen gameOver  = new GameOverScreen();
 	private JPanel currentScene;
-	private GameLogic logic = GameLogic.getInstance();
-	private boolean switching;
+//	private GameLogic logic = GameLogic.getInstance();
+//	private boolean switching;
 	
-//	public GameWindow() throws HeadlessException {
-//		super();
-//		// TODO Auto-generated constructor stub
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setLayout(new CardLayout());
-//		this.setResizable(false);
-//		
-//		this.add("Title",gameTitle);
-//		this.add("GameScreen", gameScreen);
-//		this.add("GameOver", gameOver);
-//		
-//
-//		
-//		this.pack();
-//		this.setVisible(true);
-//	}
 	
 	public GameWindow(JPanel scene) throws HeadlessException {
 		super();
 		// TODO Auto-generated constructor stub
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new CardLayout());
-		this.setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		this.currentScene = scene;
-		this.add(currentScene);
-		this.pack();
-		this.setVisible(true);
+		getContentPane().add(currentScene);
+		pack();
+		setVisible(true);
+		currentScene.requestFocus();
 		
 //		if(currentScene==ConfigurableOption.gameScreen){
 ////			System.out.println("ouch!");
@@ -63,12 +44,12 @@ public class GameWindow extends JFrame {
 	}
 
 	public void switchScene(JPanel scene){
-		this.getContentPane().remove(currentScene);
+		getContentPane().remove(currentScene);
 		this.currentScene = scene;
-		this.getContentPane().add(currentScene);
-		this.getContentPane().validate();
+		getContentPane().add(currentScene);
+		getContentPane().validate();
 		pack();
-		currentScene.requestFocus();	
+		currentScene.requestFocus();
 	}
 
 	public JPanel getCurrentScene() {

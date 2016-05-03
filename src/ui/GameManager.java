@@ -12,24 +12,16 @@ import javax.swing.JPanel;
 
 import entity.GameLogic;
 import input.InputUtility;
-import lib.ConfigurableOption;
-import lib.GameScreen;
-import lib.GameTitle;
-import lib.GameWindow;
-import lib.IGameLogic;
-import lib.IRenderableHolder;
-import lib.IRenderableObject;
+
 
 
 
 public class GameManager {
-
-	private static final int REFRESH_DELAY = 10;
-	public static final int TICK_PER_SECONDS = 1000/REFRESH_DELAY;
 	
 	private static GameTitle titleScene;
 	private static GameScreen gameScreen;
 	private static GameWindow gameWindow;
+	private static GameOverScreen gameOver;
 	private static JPanel nextScene = null;
 	
 	public static void runGame(GameLogic gameLogic){
@@ -51,14 +43,14 @@ public class GameManager {
 		
 		while(true){
 			try {
-				Thread.sleep(REFRESH_DELAY);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			gameWindow.getCurrentScene().repaint();
 			if(gameWindow.getCurrentScene() instanceof GameScreen){
 				gameLogic.logicUpdate();
-				InputUtility.postUpdate();
+//				InputUtility.postUpdate();
 			}
 			if(nextScene != null){
 				if(gameWindow.getCurrentScene() instanceof GameScreen)
@@ -79,9 +71,4 @@ public class GameManager {
 		nextScene = gameScreen;
 	}
 	
-//	public static void resizeScreen(){
-//		gameScreen.applyResize();
-//		gameWindow.setSize(ConfigurableOption.screenWidth, ConfigurableOption.screenHeight);
-//		titleScene.validate();
-//	}
 }
