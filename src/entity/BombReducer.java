@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import entity.Item;
@@ -20,6 +21,7 @@ public class BombReducer extends Item{
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		
+		g2d.setColor(Color.DARK_GRAY);
+		g2d.fillOval(x, y, radius, radius);
 	}
 }

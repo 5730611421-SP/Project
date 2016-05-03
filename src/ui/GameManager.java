@@ -58,7 +58,7 @@ public class GameManager {
 				gameWindow.switchScene(nextScene);
 				if(nextScene instanceof GameScreen)
 					gameLogic.onStart();
-				nextScene = null;
+				
 			}
 		}
 	}
@@ -68,7 +68,13 @@ public class GameManager {
 	}
 	
 	public static void newGame(){
+		gameScreen = new GameScreen();
 		nextScene = gameScreen;
+	}
+	
+	public static void GameOver(){
+		gameOver = new GameOverScreen();
+		nextScene = gameOver;
 	}
 	
 }

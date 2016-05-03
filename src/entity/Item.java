@@ -6,13 +6,15 @@ import entity.Player;
 import entity.RandomUtility;
 import render.IRenderable;
 
-public abstract class Item implements IRenderable{
+public abstract class Item implements IRenderable {
 
-	protected int x;
-	protected int y = -40;
 	protected int radius = 40;
+	protected int x;
+	protected int y = -radius;
 	protected int speed = RandomUtility.random(2, 7);
 	protected boolean destroyed = false;
+	protected int speedUp = 0;
+	protected int speedDown = 0;
 
 	public Item(int x) {
 		super();
@@ -21,7 +23,23 @@ public abstract class Item implements IRenderable{
 	}
 
 	protected void update() {
-		y += speed;
+		y += speed +speedUp +speedDown;
+	}
+
+	public int getSpeedUp() {
+		return speedUp;
+	}
+
+	public int getSpeedDown() {
+		return speedDown;
+	}
+
+	public void setSpeedUp(int speedUp) {
+		this.speedUp = speedUp;
+	}
+
+	public void setSpeedDown(int speedDown) {
+		this.speedDown = speedDown;
 	}
 
 	public boolean isDestroyed() {
@@ -32,7 +50,8 @@ public abstract class Item implements IRenderable{
 	}
 
 	public boolean collideWith(Player player) {
-		if (player.x >= x - radius + 5 && player.x <= x + radius - 5 && y >= 345 && y <= 420) {
+		if (player.x + player.explodedRadius >= x -5 && player.x - player.explodedRadius <= x+5
+				&& y+5 >= 420 - player.explodedRadius && y <= 420) {
 			return true;
 		} else
 			return false;
@@ -54,4 +73,5 @@ public abstract class Item implements IRenderable{
 		// TODO Auto-generated method stub
 		return 1;
 	}
+	
 }

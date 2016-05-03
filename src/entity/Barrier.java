@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import javax.imageio.ImageReader;
@@ -21,6 +22,7 @@ public class Barrier extends Item {
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		
+		g2d.setColor(Color.YELLOW);
+		g2d.fillOval(x, y, radius, radius);
 	}
 }

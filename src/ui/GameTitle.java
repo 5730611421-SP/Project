@@ -28,7 +28,7 @@ public class GameTitle extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ConfigurableOption.gameWindow.switchScene(ConfigurableOption.gameScreen);
+				GameManager.newGame();
 			}
 		});
 		

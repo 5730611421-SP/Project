@@ -46,7 +46,7 @@ public class GameOverScreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ConfigurableOption.gameWindow.switchScene(ConfigurableOption.gameScreen);
+				GameManager.newGame();
 			}
 		});
 		
@@ -55,7 +55,7 @@ public class GameOverScreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ConfigurableOption.gameWindow.switchScene(ConfigurableOption.gameTitle);
+				GameManager.goToTitle();
 			}
 		});
 		

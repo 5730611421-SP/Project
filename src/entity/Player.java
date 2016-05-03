@@ -12,6 +12,19 @@ public class Player implements IRenderable {
 	protected int radius = 40;
 	protected int x;
 	protected int y = 420 - radius;
+	protected boolean barrier = false;
+	protected boolean reduce = false;
+	protected int shoot=0;
+	
+	public boolean isReduce() {
+		return reduce;
+	}
+
+	public void setReduce(boolean reduce) {
+		this.reduce = reduce;
+	}
+
+	protected int explodedRadius = radius;
 
 	public Player() {
 		super();
@@ -30,6 +43,10 @@ public class Player implements IRenderable {
 		} else if (InputUtility.getMouseX() >= 0 && InputUtility.getMouseX() <= ConfigurableOption.SCREEN_WIDTH-radius) {
 			x = InputUtility.getMouseX();
 		}
+		if (barrier){
+			explodedRadius = radius+radius/2;
+		} else 
+			explodedRadius = radius;
 	}
 
 	@Override
@@ -57,4 +74,13 @@ public class Player implements IRenderable {
 		return false;
 	}
 
+	public boolean isBarrier() {
+		return barrier;
+	}
+
+	public void setBarrier(boolean barrier) {
+		this.barrier = barrier;
+	}
+
+	
 }

@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import entity.Item;
@@ -21,6 +22,7 @@ public class SpeedDownItem extends Item{
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		
+		g2d.setColor(Color.GREEN);
+		g2d.fillOval(x, y, radius, radius);
 	}
 }
